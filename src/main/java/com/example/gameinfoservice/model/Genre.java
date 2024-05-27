@@ -6,11 +6,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
 
+/** The type Genre. */
 @Setter
 @Getter
 @Entity

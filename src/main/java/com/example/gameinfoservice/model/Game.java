@@ -9,10 +9,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+
+/** The type Game. */
 @Setter
 @Getter
 @Entity
@@ -21,15 +23,15 @@ public class Game {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
   private String name;
   private String description;
+
   @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(
       name = "game_genre",
       joinColumns = @JoinColumn(name = "game_id"),
-      inverseJoinColumns = @JoinColumn(name = "genre_id")
-  )
+      inverseJoinColumns = @JoinColumn(name = "genre_id"))
   @JsonIgnoreProperties(value = "games")
   private List<Genre> genre;
-
 }

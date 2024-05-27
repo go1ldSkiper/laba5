@@ -1,60 +1,89 @@
 package com.example.gameinfoservice.aspect;
 
-
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import java.util.Arrays;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-
+/** The type Logging aspect. */
 @Aspect
 @Component
 public class LoggingAspect {
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoggingAspect.class);
 
+  private static final Logger LOGGER = LoggerFactory.getLogger(LoggingAspect.class);
 
-    @Pointcut("@annotation(AspectAnnotation)")
-    public void callAtMyServiceAnnotation() { }
+  /** Init aspect. */
+  @PostConstruct
+  public void initAspect() {
+    LOGGER.info("Aspect is initialized");
+  }
 
-    @Pointcut("@annotation(com.example.gameinfoservice.aspect.ExceptionLoggerAnnotation)")
-    public void error() { }
+  /** Destroy aspect. */
+  @PreDestroy
+  public void destroyAspect() {
+    LOGGER.info("Aspect is destroyed");
+  }
 
-    @Before(value = "error()")
-    public void logException(final JoinPoint joinPoint) {
-        String methodName = joinPoint.toString();
-        LOGGER.error("<< {}() - ", methodName);
-    }
+  /** Call at my service annotation. */
+  @Pointcut("@annotation(AspectAnnotation)")
+  public void callAtMyServiceAnnotation() {}
 
-    @Before(value = "callAtMyServiceAnnotation()")
-    public void logBefore(final JoinPoint joinPoint) {
-        Object[] args = joinPoint.getArgs();
-        String methodName = joinPoint + " "
-                + joinPoint.getSignature().getName();
-        LOGGER.info(">> {}() - {}\n", methodName, Arrays.toString(args));
-    }
+  /** Error. */
+  @Pointcut("@annotation(com.example.gameinfoservice.aspect.ExceptionLoggerAnnotation)")
+  public void error() {}
 
-    @AfterReturning(value = "callAtMyServiceAnnotation()", returning = "result")
-    public void logAfter(final JoinPoint joinPoint, final Object result) {
-        String methodName = joinPoint.toString();
-        LOGGER.info("<< {}() - {}", methodName, result);
-    }
+  /**
+   * Log after.
+   *
+   * @param joinPoint the join point
+   * @param result the result
+   */
+  @AfterReturning(value = "callAtMyServiceAnnotation()", returning = "result")
+  public void logAfter(final JoinPoint joinPoint, final Object result) {
+    String methodName = joinPoint.toString();
+    LOGGER.info("<< {}() - {}", methodName, result);
+  }
 
-    @AfterThrowing(pointcut = "callAtMyServiceAnnotation()", throwing = "exception")
-    public void logException(final JoinPoint joinPoint, final Throwable exception) {
-        String methodName = joinPoint.toString();
-        LOGGER.error("<< {}() - {}", methodName, exception.getMessage());
-    }
-    @PostConstruct
-    public void initAspect() {
-        LOGGER.info("Aspect is initialized");
-    }
+  /**
+   * Log exception.
+   *
+   * @param joinPoint the join point
+   * @param exception the exception
+   */
+  @AfterThrowing(pointcut = "callAtMyServiceAnnotation()", throwing = "exception")
+  public void logException(final JoinPoint joinPoint, final Throwable exception) {
+    String methodName = joinPoint.toString();
+    LOGGER.error("<< {}() - {}", methodName, exception.getMessage());
+  }
 
-    @PreDestroy
-    public void destroyAspect() {
-        LOGGER.info("Aspect is destroyed");
-    }
+  /**
+   * Log exception.
+   *
+   * @param joinPoint the join point
+   */
+  @Before(value = "error()")
+  public void logException(final JoinPoint joinPoint) {
+    String methodName = joinPoint.toString();
+    LOGGER.error("<< {}() - ", methodName);
+  }
+
+  /**
+   * Log before.
+   *
+   * @param joinPoint the join point
+   */
+  @Before(value = "callAtMyServiceAnnotation()")
+  public void logBefore(final JoinPoint joinPoint) {
+    Object[] args = joinPoint.getArgs();
+    String methodName = joinPoint + " " + joinPoint.getSignature().getName();
+    LOGGER.info(">> {}() - {}\n", methodName, Arrays.toString(args));
+  }
 }

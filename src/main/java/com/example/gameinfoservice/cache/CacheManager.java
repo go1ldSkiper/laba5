@@ -1,30 +1,55 @@
 package com.example.gameinfoservice.cache;
 
-import org.springframework.stereotype.Service;
 import java.util.HashMap;
+import org.springframework.stereotype.Service;
 
+
+/** The type Cache manager. */
 @Service
 public class CacheManager {
-    private final HashMap<String, Object> cache = new HashMap<>();
+  private final HashMap<String, Object> cache = new HashMap<>();
 
-    public void put(final String key, final Object value) {
-        cache.put(key, value);
-    }
+  /**
+   * Put.
+   *
+   * @param key the key
+   * @param value the value
+   */
+  public void put(final String key, final Object value) {
+    cache.put(key, value);
+  }
 
-    public Object get(final String key) {
-        return cache.get(key);
-    }
+  /**
+   * Get object.
+   *
+   * @param key the key
+   * @return the object
+   */
+  public Object get(final String key) {
+    return cache.get(key);
+  }
 
-    public boolean containsKey(final String key) {
-        return cache.containsKey(key);
-    }
+  /**
+   * Contains key boolean.
+   *
+   * @param key the key
+   * @return the boolean
+   */
+  public boolean containsKey(final String key) {
+    return cache.containsKey(key);
+  }
 
-    public void remove(final String key) {
-        cache.remove(key);
-    }
+  /**
+   * Remove.
+   *
+   * @param key the key
+   */
+  public void remove(final String key) {
+    cache.remove(key);
+  }
 
-    public void clear() {
-        cache.clear();
-    }
+  /** Clear. */
+  public void clear() {
+    cache.clear();
+  }
 }
-

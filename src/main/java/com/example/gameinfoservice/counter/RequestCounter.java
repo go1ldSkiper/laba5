@@ -1,22 +1,30 @@
 package com.example.gameinfoservice.counter;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.atomic.AtomicInteger;
 
+/** The type Request counter. */
 @Component
 public class RequestCounter {
-    private final AtomicInteger count = new AtomicInteger(0);
+  private final AtomicInteger count = new AtomicInteger(0);
 
-    public int getCount() {
-        return count.get();
-    }
+  /**
+   * Gets count.
+   *
+   * @return the count
+   */
+  public int getCount() {
+    return count.get();
+  }
 
-    public void increment() {
-        count.incrementAndGet();
-    }
+  /** Increment. */
+  public void increment() {
+    count.incrementAndGet();
+  }
 
-    public void reset() {
-        count.set(0);
-    }
+  /** Reset. */
+  public void reset() {
+    count.set(0);
+  }
 }

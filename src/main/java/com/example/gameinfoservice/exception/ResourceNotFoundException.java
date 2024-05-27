@@ -1,7 +1,13 @@
 package com.example.gameinfoservice.exception;
 
+/** The type Resource not found exception. */
 public class ResourceNotFoundException extends RuntimeException {
-    public ResourceNotFoundException(final String msg) {
-        super(msg);
-    }
+  /**
+   * Instantiates a new Resource not found exception.
+   *
+   * @param msg the msg
+   */
+  public ResourceNotFoundException(final String msg) {
+    super(msg);
+  }
 }
