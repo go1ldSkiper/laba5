@@ -11,17 +11,18 @@ import com.example.gameinfoservice.model.Genre;
 import com.example.gameinfoservice.repository.GameRepository;
 import com.example.gameinfoservice.repository.GenreRepository;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+@RunWith(MockitoJUnitRunner.class)
 class GameServiceTest {
 
   @Mock private GameRepository gameRepository;
@@ -31,11 +32,6 @@ class GameServiceTest {
   @Mock private CacheManager cacheManager;
 
   @InjectMocks private GameService gameService;
-
-  @BeforeEach
-  void setUp() {
-    MockitoAnnotations.initMocks(this);
-  }
 
   @Test
   void testGetAllGames() {
