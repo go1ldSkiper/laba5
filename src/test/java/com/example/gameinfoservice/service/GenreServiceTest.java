@@ -9,9 +9,6 @@ import com.example.gameinfoservice.repository.GameRepository;
 import com.example.gameinfoservice.repository.GenreRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,17 +19,20 @@ import static org.mockito.Mockito.*;
 class GenreServiceTest {
   private static final String GENRE = "GenreName_";
 
-  @Mock private GenreRepository genreRepository;
+  private GenreRepository genreRepository;
 
-  @Mock private CacheManager cacheManager;
+  private CacheManager cacheManager;
 
-  @Mock private GameRepository gameRepository;
+  private GameRepository gameRepository;
 
-  @InjectMocks private GenreService genreService;
+   private GenreService genreService;
 
   @BeforeEach
   void setUp() {
-    MockitoAnnotations.initMocks(this);
+    gameRepository = mock(GameRepository.class);
+    genreRepository = mock(GenreRepository.class);
+    cacheManager = mock(CacheManager.class);
+    genreService = new GenreService(genreRepository,cacheManager,gameRepository);
   }
 
   @Test
